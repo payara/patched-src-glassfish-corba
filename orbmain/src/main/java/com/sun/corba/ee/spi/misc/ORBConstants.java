@@ -17,6 +17,8 @@
  * Classpath-exception-2.0
  */
 
+// Portions Copyright [2025] [Payara Foundation and/or its affiliates]
+
 package com.sun.corba.ee.spi.misc;
 
 import com.sun.corba.ee.org.omg.CORBA.SUNVMCID ;
@@ -616,6 +618,10 @@ public class ORBConstants {
     // ORB's gmbal root.
     public static final String GMBAL_ROOT_PARENT_NAME = SUN_PREFIX 
         + "ORBGmbalRootParentName" ;
+    
+    //protocol constants to enable new lock api mechanism to process fragments 
+    public static final String ENABLE_NEW_FRAGMENT_CONCURRENCY_PROCESS = SUN_PREFIX + "protocol.enableNewFragmentProcess";
+    public static final String NEW_FRAGMENT_EMPTY_CONDITION_TIMEOUT = SUN_PREFIX + "protocol.newFragmentEmptyConditionTimeout";
 }
 
 // End of file.
