@@ -16,12 +16,12 @@
  * SPDX-License-Identifier: EPL-2.0 OR BSD-3-Clause OR GPL-2.0 WITH
  * Classpath-exception-2.0
  */
+// Portions Copyright [2016] [Payara Foundation and/or its affiliates]
 
 package com.sun.corba.ee.impl.ior.iiop;
 
 import org.omg.CORBA_2_3.portable.InputStream ;
 
-import com.sun.corba.ee.spi.orb.ORB ;
 
 import com.sun.corba.ee.spi.logging.IORSystemException ;
 
@@ -53,13 +53,15 @@ public final class IIOPAddressImpl extends IIOPAddressBase
         port = shortToInt( thePort ) ;
     }
 
+    @Override
     public String getHost()
     {
         return host ;
     }
 
+    @Override
     public int getPort()
     {
         return port ;
-    }
+    }    
 }

@@ -16,6 +16,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR BSD-3-Clause OR GPL-2.0 WITH
  * Classpath-exception-2.0
  */
+// Portions Copyright [2016-2017] [Payara Foundation and/or its affiliates]
 
 package com.sun.corba.ee.impl.ior.iiop;
 
@@ -62,8 +63,12 @@ public class IIOPProfileTemplateImpl extends TaggedProfileTemplateBase
 
     @Override
     public String toString() {
-        return String.format("IIOPProfileTemplateImpl[giopVersion=%d.%d primary=%s:%d]",
-              giopVersion.getMajor(), giopVersion.getMinor(), primary.getHost(), primary.getPort());
+        return String.format("IIOPProfileTemplateImpl[giopVersion=%d.%d primary%s=%s:%d]",
+                giopVersion.getMajor(), giopVersion.getMinor(),
+                primary instanceof IIOPAddressImplLocalServer ?
+                        String.format("[origDelegateHost = %s][LOCAL]",
+                                ((IIOPAddressImplLocalServer) primary).getDelegateHost()) : "",
+                primary.getHost(), primary.getPort());
     }
 
     public boolean equals( Object obj )
@@ -141,7 +146,7 @@ public class IIOPProfileTemplateImpl extends TaggedProfileTemplateBase
         byte major = istr.read_octet() ;
         byte minor = istr.read_octet() ;
         giopVersion = GIOPVersion.getInstance( major, minor ) ;
-        primary = new IIOPAddressImpl( istr ) ;
+        primary = IIOPFactories.makeIIOPAddress(istr, orb);
         orb = (ORB)(istr.orb()) ;
         // Handle any tagged components (if applicable)
         if (minor > 0) 

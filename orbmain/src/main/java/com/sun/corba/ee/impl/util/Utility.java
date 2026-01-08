@@ -309,8 +309,13 @@ public final class Utility {
                 } else {
                     loadedClass = ORBClassLoader.loadClass(className);
                 }
-            } catch (ClassNotFoundException e) {
+            }
+            catch (ClassNotFoundException cnfe){
                 wrapper.classNotFound(className);
+                // ClassNotFoundException is only really a problem if we have no loadedClass already
+                if (loadedClass == null){
+                    throw cnfe;
+                }
             }
         }
 

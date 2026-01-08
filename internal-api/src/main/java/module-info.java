@@ -13,11 +13,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
+// Portions Copyright [2025] [Payara Foundation and/or its affiliates]
 
 module org.glassfish.corba.internal {
 
+    requires java.logging;
     requires org.glassfish.gmbal.api;
     requires org.glassfish.pfl.basic;
+    requires static lombok;
 
     exports com.sun.corba.ee.impl.threadpool;
     exports com.sun.corba.ee.spi.logex.stdcorba;

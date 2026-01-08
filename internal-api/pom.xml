@@ -19,12 +19,13 @@
     Classpath-exception-2.0
 
 -->
+<!--Portions Copyright [2025] [Payara Foundation and/or its affiliates]-->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>glassfish-corba</artifactId>
         <groupId>org.glassfish.corba</groupId>
-        <version>5.0.0</version>
+        <version>5.0.0.payara-p2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -45,6 +46,12 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.42</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

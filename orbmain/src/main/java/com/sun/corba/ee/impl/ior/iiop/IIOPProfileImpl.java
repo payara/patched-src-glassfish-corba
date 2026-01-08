@@ -16,6 +16,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR BSD-3-Clause OR GPL-2.0 WITH
  * Classpath-exception-2.0
  */
+// Portions Copyright [2016-2017] [Payara Foundation and/or its affiliates]
 
 package com.sun.corba.ee.impl.ior.iiop;
 
@@ -177,7 +178,7 @@ public class IIOPProfileImpl extends IdentifiableBase implements IIOPProfile
         // First, read all of the IIOP IOR data
         GIOPVersion version = new GIOPVersion() ;
         version.read( istr ) ;
-        IIOPAddress primary = new IIOPAddressImpl( istr ) ;
+        IIOPAddress primary = IIOPFactories.makeIIOPAddress(istr, orb);
         byte[] key = EncapsulationUtility.readOctets( istr ) ;
 
         ObjectKey okey = orb.getObjectKeyFactory().create( key ) ;
@@ -299,12 +300,13 @@ public class IIOPProfileImpl extends IdentifiableBase implements IIOPProfile
             if (isForeignObject()) return false;
 
             final int port = proftemp.getPrimaryAddress().getPort();
-            final String host = proftemp.getPrimaryAddress().getHost() ;
+            final IIOPAddress primary = proftemp.getPrimaryAddress();
+            final String host = primary.getHost();
             final int scid = oktemp.getSubcontractId() ;
             final int sid = oktemp.getServerId() ;
             computingIsLocal( host, scid, sid, port ) ;
 
-            final boolean isLocalHost = orb.isLocalHost( host ) ;
+            final boolean isLocalHost = orb.isLocalHost( host );
             final boolean isLocalServerId = (sid == -1) || orb.isLocalServerId( scid, sid ) ;
             final boolean isLocalServerPort = orb.getLegacyServerSocketManager().legacyIsLocalServerPort( port ) ;
             isLocalResults( isLocalHost, isLocalServerId, isLocalServerPort ) ;
@@ -313,6 +315,11 @@ public class IIOPProfileImpl extends IdentifiableBase implements IIOPProfile
         }
 
         return cachedIsLocal ;
+    }
+
+    @Override
+    public boolean isStale() {
+        return IIOPAddressImplLocalServer.isStale(getTaggedProfileTemplate());
     }
 
     private boolean isForeignObject() {
